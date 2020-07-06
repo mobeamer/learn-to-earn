@@ -1,0 +1,19 @@
+***************  shell.azure.com ***********************
+
+--------------setup Azure Docker Image Containers
+
+$RESOURCE_GROUP="mb-playground"
+
+az acr create --name learntoearn --resource-group $RESOURCE_GROUP --sku standard --admin-enabled true
+
+git clone https://mobeamer@dev.azure.com/mobeamer/ThePlayground/_git/learn-to-earn
+
+cd learn-to-earn
+
+az acr build --registry learntoearn --image landing-web-image .
+
+az appservice plan create -g mb-playground -n lte-app-svc --is-linux
+
+az webapp create -g mb-playground -p lte-app-svc -n lte-landing -i learntoearn/landing-web-image:tag 
+
+az acr task create --registry learntoearn --name buildwebapp --image learntoearn/landing-web-image --context https://mobeamer@dev.azure.com/mobeamer/ThePlayground/_git/learn-to-earn --branch master --file Dockerfile --git-access-token <access_token>
