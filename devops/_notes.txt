@@ -17,3 +17,6 @@ az appservice plan create -g mb-playground -n lte-app-svc --is-linux
 az webapp create -g mb-playground -p lte-app-svc -n lte-landing -i learntoearn/landing-web-image:tag 
 
 az acr task create --registry learntoearn --name buildwebapp --image learntoearn/landing-web-image --context https://mobeamer@dev.azure.com/mobeamer/ThePlayground/_git/learn-to-earn --branch master --file Dockerfile --git-access-token <access_token>
+
+
+az acr task create --registry learntoearn --name taskhelloworld --image learntoearn/landing-web-image --context https://github.com/mobeamer/learn-to-earn.git --file Dockerfile --git-access-token e243def82ee7d33d315a8310b28902a48866c223
